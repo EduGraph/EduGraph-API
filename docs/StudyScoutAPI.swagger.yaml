@@ -1,0 +1,54 @@
+swagger: '2.0'
+info:
+  title: StudyScoutAPI
+  description: API to access StudyScout data
+  version: 0.1.0
+host: api.studyscout.io
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /universities:
+    get:
+      summary: Universities
+      description: |
+        The University endpoint.
+      parameters:
+        - name: latitude
+          in: query
+          description: Latitude component of location.
+          required: true
+          type: number
+          format: double
+      tags:
+        - Universities
+      responses:
+        '200':
+          description: An array of universities
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/University'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  University:
+    type: object
+    properties:
+      uri:
+        type: string
+        description: 'Unique identifier representing a specific University.'
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
