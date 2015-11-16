@@ -1,47 +1,616 @@
 swagger: '2.0'
 info:
   title: StudyScoutAPI
-  description: API to access StudyScout data
+  description: API to access StudyScout data, based on the BISE ontology.
   version: 0.1.0
 host: api.studyscout.io
 schemes:
   - https
-basePath: /v1
+basePath: /v0
 produces:
   - application/json
 paths:
-  /universities:
+  /college-or-university:
     get:
-      summary: Universities
       description: |
-        The University endpoint.
+        Returns a list of BISE colleges and universities.
       parameters:
-        - name: latitude
+        - name: limit
           in: query
-          description: Latitude component of location.
-          required: true
-          type: number
-          format: double
+          description: Limit the amount of results.
+          required: false
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: Offset for the next entries.
+          required: false
+          type: integer
+          format: int32
+        - name: q
+          in: query
+          description: Lookup college or university by string.
+          required: false
+          type: string
+        - name: lang
+          in: query
+          description: ISO 639-1 language code of preferred language.
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: Comma seperated fields for the response.
+          required: false
+          type: string
+        - name: sort
+          in: query
+          description: Sort response elements by comma seperated fields. Add '-' in front of the field for descending order.
+          required: false
+          type: string
       tags:
-        - Universities
+        - CollegeOrUniversity
       responses:
         '200':
-          description: An array of universities
+          description: An array of colleges or universities
           schema:
             type: array
             items:
-              $ref: '#/definitions/University'
+              $ref: '#/definitions/CollegeOrUniversity'
+        '404':
+          description: No colleges or universities found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /college-or-university/{CollegeOrUniversityName}:
+    get:
+      description: |
+        Returns a single BISE college or university, based on its individual name.
+      operationId: getCollegeOrUniversityByName
+      parameters:
+        - name: CollegeOrUniversityName
+          in: path
+          description: Name of college or university
+          required: true
+          type: string
+        - name: lang
+          in: query
+          description: ISO 639-1 Language Code of preferred language.
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: Comma seperated fields for the response.
+          required: false
+          type: string
+      tags:
+        - CollegeOrUniversity
+      responses:
+        '200':
+          description: College or university response
+          schema:
+            $ref: '#/definitions/CollegeOrUniversity'
+        '404':
+          description: No college or university found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /bise-job-profile:
+    get:
+      description: |
+        Returns a list of BISE job profiles.
+      parameters:
+        - name: limit
+          in: query
+          description: Limit the amount of results.
+          required: false
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: Offset for the next entries.
+          required: false
+          type: integer
+          format: int32
+        - name: q
+          in: query
+          description: Lookup job profile by string.
+          required: false
+          type: string
+        - name: lang
+          in: query
+          description: ISO 639-1 language code of preferred language.
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: Comma seperated fields for the response.
+          required: false
+          type: string
+        - name: sort
+          in: query
+          description: Sort response elements by comma seperated fields. Add '-' in front of the field for descending order.
+          required: false
+          type: string
+      tags:
+        - BISEJobProfile
+      responses:
+        '200':
+          description: Job profile response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/JobProfile'
+        '404':
+          description: No job profiles found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /bise-job-profile/{JobProfile}:
+    get:
+      description: |
+        Returns a single BISE job profile.
+      operationId: getBISEJobProfileByName
+      parameters:
+        - name: JobProfile
+          in: path
+          description: Job profile name.
+          required: true
+          type: string
+        - name: lang
+          in: query
+          description: ISO 639-1 language code of preferred language.
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: Comma seperated fields for the response.
+          required: false
+          type: string
+      tags:
+        - BISEJobProfile
+      responses:
+        '200':
+          description: Job profile response
+          schema:
+            $ref: '#/definitions/JobProfile'
+        '404':
+          description: No job profile found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /bise-pillar:
+    get:
+      description: |
+        Returns a list of BISE pillar elements.
+      parameters:
+        - name: limit
+          in: query
+          description: Limit the amount of results.
+          required: false
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: Offset for the next entries.
+          required: false
+          type: integer
+          format: int32
+        - name: q
+          in: query
+          description: Lookup college or university by string.
+          required: false
+          type: string
+        - name: lang
+          in: query
+          description: ISO 639-1 language code of preferred language.
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: Comma seperated fields for the response.
+          required: false
+          type: string
+        - name: sort
+          in: query
+          description: Sort response elements by comma seperated fields. Add '-' in front of the field for descending order.
+          required: false
+          type: string
+      tags:
+        - BISEPillar
+      responses:
+        '200':
+          description: Pillars response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Pillar'
+        '404':
+          description: No pillars found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /bise-pillar/{Pillar}:
+    get:
+      description: |
+        Returns a single BISE pillar.
+      operationId: getBISEPillarByName
+      parameters:
+        - name: Pillar
+          in: path
+          description: Pillar of college or university
+          required: true
+          type: string
+        - name: lang
+          in: query
+          description: ISO 639-1 language code of preferred language.
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: Comma seperated fields for the response.
+          required: false
+          type: string
+      tags:
+        - BISEPillar
+      responses:
+        '200':
+          description: Pillars response
+          schema:
+            $ref: '#/definitions/Pillar'
+        '404':
+          description: No pillar found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /bise-degree-program:
+    get:
+      description: |
+        Returns a list of degree programs.
+      parameters:
+        - name: limit
+          in: query
+          description: Limit the amount of results.
+          required: false
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: Offset for the next entries.
+          required: false
+          type: integer
+          format: int32
+        - name: q
+          in: query
+          description: Lookup degree-program by string.
+          required: false
+          type: string
+        - name: lang
+          in: query
+          description: ISO 639-1 language code of preferred language.
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: Comma seperated fields for the response.
+          required: false
+          type: string
+        - name: sort
+          in: query
+          description: Sort response elements by comma seperated fields. Add '-' in front of the field for descending order.
+          required: false
+          type: string
+      tags:
+        - BISEDegreeProgram
+      responses:
+        '200':
+          description: Degree programs response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DegreeProgram'
+        '404':
+          description: No degree programs found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /bise-degree-program/{DegreeProgram}:
+    get:
+      description: |
+        Returns a single degree program.
+      operationId: Find degree programs by name.
+      parameters:
+        - name: DegreeProgram
+          in: path
+          description: Degree program name
+          required: true
+          type: string
+        - name: lang
+          in: query
+          description: ISO 639-1 language code of preferred language.
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: Comma seperated fields for the response.
+          required: false
+          type: string
+      tags:
+        - BISEDegreeProgram
+      responses:
+        '200':
+          description: Degree programs response
+          schema:
+            $ref: '#/definitions/DegreeProgram'
+        '404':
+          description: No degree program found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /place:
+    get:
+      description: |
+        Returns a list of places where colleges or universities are situated.
+      parameters:
+        - name: limit
+          in: query
+          description: Limit the amount of results.
+          required: false
+          type: integer
+          format: int32
+        - name: offset
+          in: query
+          description: Offset for the next entries.
+          required: false
+          type: integer
+          format: int32
+        - name: q
+          in: query
+          description: Lookup location by string.
+          required: false
+          type: string
+        - name: lang
+          in: query
+          description: ISO 639-1 language code of preferred language.
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: Comma seperated fields for the response.
+          required: false
+          type: string
+        - name: sort
+          in: query
+          description: Sort response elements by comma seperated fields. Add '-' in front of the field for descending order.
+          required: false
+          type: string
+      tags:
+        - Place
+      responses:
+        '200':
+          description: Places response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Place'
+        '404':
+          description: No places found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /place/{PlaceName}:
+    get:
+      description: |
+        Returns a single place.
+      operationId: Find places by name.
+      parameters:
+        - name: PlaceName
+          in: path
+          description: Place name
+          required: true
+          type: string
+        - name: lang
+          in: query
+          description: ISO 639-1 language code of preferred language.
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: Comma seperated fields for the response.
+          required: false
+          type: string
+      tags:
+        - Place
+      responses:
+        '200':
+          description: Place response
+          schema:
+            $ref: '#/definitions/Place'
+        '404':
+          description: No place found
+          schema:
+            $ref: '#/definitions/NotFoundError'
         default:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
 definitions:
-  University:
+  CollegeOrUniversity:
     type: object
     properties:
       uri:
         type: string
-        description: 'Unique identifier representing a specific University.'
+        description: 'Unique identifier representing a specific BISE college or university.'
+      pref_label:
+        type: object
+        description: 'College or university label object.'
+        properties:
+          lang:
+            type: string
+            description: 'ISO 639-1 Language Code.'
+          label:
+            type: string
+            description: 'College or university label string.'
+      alt_label:
+        type: object
+        description: 'College or university alternate label object.'
+        properties:
+          lang:
+            type: string
+            description: 'ISO 639-1 Language Code.'
+          label:
+            type: string
+            description: 'College or university alternate label string.'
+      url:
+        type: string
+        description: 'College or university website URL.'
+      place:
+        type: string
+        description: 'Place name in which the college or university is situated.'
+  JobProfile:
+    type: object
+    properties:
+      uri:
+        type: string
+        description: 'Unique identifier representing a specific BISE job profile.'
+      pref_label:
+        type: object
+        description: 'Job profile label object.'
+        properties:
+          lang:
+            type: string
+            description: 'ISO 639-1 Language Code.'
+          label:
+            type: string
+            description: 'Job profile label string.'
+      definition:
+        type: object
+        description: 'Object for the specific job profile definition.'
+        properties:
+          lang:
+            type: string
+            description: 'ISO 639-1 Language Code.'
+          label:
+            type: string
+            description: 'Job profile definition string.'
+      market_share:
+        type: number
+        format: float
+        description: 'Percentage of job profile market share.'
+      education_requirements:
+        type: array
+        description: 'Array of unique identifiers representing a specific education requirement.'
+        items:
+          type: string
+  Pillar:
+    type: object
+    properties:
+      uri:
+        type: string
+        description: 'Unique identifier representing a specific BISE pillar.'
+      pref_label:
+        type: object
+        description: 'Pillar label object.'
+        properties:
+          lang:
+            type: string
+            description: 'ISO 639-1 Language Code.'
+          label:
+            type: string
+            description: 'Pillar label string.'
+      definition:
+        type: object
+        description: 'Object for the specific pillar definition.'
+        properties:
+          lang:
+            type: string
+            description: 'ISO 639-1 Language Code.'
+          label:
+            type: string
+            description: 'Pillar definition string.'
+  DegreeProgram:
+    type: object
+    properties:
+      uri:
+        type: string
+        description: 'Unique identifier representing a specific degree program'
+  Place:
+    type: object
+    properties:
+      uri:
+        type: string
+        description: 'Unique identifier representing a specific place'
+      pref_label:
+        type: object
+        description: 'Place label object.'
+        properties:
+          lang:
+            type: string
+            description: 'ISO 639-1 Language Code.'
+          label:
+            type: string
+            description: 'Place label string.'
+      country:
+        type: object
+        description: 'Country object of place'
+        properties:
+          lang:
+            type: string
+            description: 'ISO 639-1 Language Code.'
+          label:
+            type: string
+            description: 'Country label string.'
+          country_code:
+            type: string
+            description: 'ISO 3166-1 Country Code'
+      geo_coordinates:
+        type: object
+        description: 'The geographic coordinates of a place'
+        properties:
+          longitude:
+            type: number
+            format: float
+            description: 'The longitude of a location.'
+          latitude:
+            type: number
+            format: float
+            description: 'The latitude of a location.'
+  NotFoundError:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
   Error:
     type: object
     properties:
