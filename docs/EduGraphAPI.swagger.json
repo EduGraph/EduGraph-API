@@ -26,8 +26,8 @@
       "description": "Section for degree programs."
     },
     {
-      "name": "Namespace",
-      "description": "Section for namespaces."
+      "name": "Prefixes",
+      "description": "Section for prefixes."
     },
     {
       "name": "Profiles",
@@ -95,13 +95,13 @@
         }
       }
     },
-    "/namespaces": {
+    "/prefixes": {
       "get": {
         "tags": [
           "Namespace"
         ],
-        "summary": "List all available namespaces.",
-        "description": "List all available namespaces.",
+        "summary": "List all available prefixes.",
+        "description": "List all available prefixes.",
         "operationId": "getNamespaces",
         "consumes": [],
         "produces": [
@@ -110,18 +110,18 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "List all available namespaces.",
+            "description": "List all available prefixes.",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Namespace"
+                "$ref": "#/definitions/Prefix"
               }
             }
           }
         }
       }
     },
-    "/namespaces/{name}": {
+    "/prefixes/{name}": {
       "get": {
         "tags": [
           "Namespace"
@@ -137,16 +137,16 @@
           {
             "name": "name",
             "in": "path",
-            "description": "Namespace name.",
+            "description": "Prefix name.",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Delivers a single namespace.",
+            "description": "Delivers a single prefix.",
             "schema": {
-              "$ref": "#/definitions/Namespace"
+              "$ref": "#/definitions/Prefix"
             }
           }
         }
@@ -356,23 +356,6 @@
       },
       "description": "Defines a geo location."
     },
-    "Namespace": {
-      "required": [
-        "namespace",
-        "uri"
-      ],
-      "properties": {
-        "namespace": {
-          "type": "string",
-          "description": "Name of the namespace."
-        },
-        "uri": {
-          "type": "string",
-          "description": "URI of the namespace."
-        }
-      },
-      "description": "Describes a namespace."
-    },
     "Label": {
       "required": [
         "label",
@@ -389,6 +372,23 @@
         }
       },
       "description": "Label of object with language information."
+    },
+    "Prefix": {
+      "required": [
+        "prefix",
+        "uri"
+      ],
+      "properties": {
+        "prefix": {
+          "type": "string",
+          "description": "Name of the prefix."
+        },
+        "uri": {
+          "type": "string",
+          "description": "URI of the prefix."
+        }
+      },
+      "description": "Describes a prefix."
     },
     "Program": {
       "required": [
