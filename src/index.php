@@ -107,11 +107,11 @@ $app->GET('/institutions/{curie}', function($request, $response, $args) {
 
 /**
  * GET getNamespaces
- * Summary: List all available namespaces.
- * Notes: List all available namespaces.
+ * Summary: List all available prefixes.
+ * Notes: List all available prefixes.
  * Output-Formats: [application/json]
  */
-$app->GET('/namespaces', function($request, $response, $args) {
+$app->GET('/prefixes', function($request, $response, $args) {
             
             
             
@@ -127,7 +127,7 @@ $app->GET('/namespaces', function($request, $response, $args) {
  * Notes: Delivers a specific namespace.
  * Output-Formats: [application/json]
  */
-$app->GET('/namespaces/{name}', function($request, $response, $args) {
+$app->GET('/prefixes/{name}', function($request, $response, $args) {
             
             
             
