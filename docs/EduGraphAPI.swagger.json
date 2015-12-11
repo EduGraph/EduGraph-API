@@ -1,0 +1,455 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API to access EduGraph data, based on the BISE ontology.",
+    "version": "1.0.0",
+    "title": "EduGraphAPI",
+    "contact": {},
+    "license": {
+      "name": "Apache License, Version 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "api.edugraph.io:80",
+  "basePath": "/v0",
+  "tags": [
+    {
+      "name": "Default",
+      "description": "Default section"
+    },
+    {
+      "name": "Institution",
+      "description": "Section for institutions."
+    },
+    {
+      "name": "Program",
+      "description": "Section for degree programs."
+    },
+    {
+      "name": "Namespace",
+      "description": "Section for namespaces."
+    },
+    {
+      "name": "Profiles",
+      "description": "Section for job profiles."
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/institutions": {
+      "get": {
+        "tags": [
+          "Institution"
+        ],
+        "summary": "Delivers a list of institutions.",
+        "description": "Delivers a list of institutions.",
+        "operationId": "getInstitutions",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Delivers a list of institutions.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Institution"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/institutions/{curie}": {
+      "get": {
+        "tags": [
+          "Institution"
+        ],
+        "summary": "Delivers a specific institution.",
+        "description": "Delivers a specific institution.",
+        "operationId": "getInstitutionsCurie",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "curie",
+            "in": "path",
+            "description": "Short URI of the specified Institution.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Institution"
+            }
+          }
+        }
+      }
+    },
+    "/namespaces": {
+      "get": {
+        "tags": [
+          "Namespace"
+        ],
+        "summary": "List all available namespaces.",
+        "description": "List all available namespaces.",
+        "operationId": "getNamespaces",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List all available namespaces.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Namespace"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/namespaces/{name}": {
+      "get": {
+        "tags": [
+          "Namespace"
+        ],
+        "summary": "Delivers a specific namespace.",
+        "description": "Delivers a specific namespace.",
+        "operationId": "getNamespacesName",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "description": "Namespace name.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delivers a single namespace.",
+            "schema": {
+              "$ref": "#/definitions/Namespace"
+            }
+          }
+        }
+      }
+    },
+    "/profiles": {
+      "get": {
+        "tags": [
+          "Profiles"
+        ],
+        "summary": "Delivers a list of job profiles.",
+        "description": "Delivers a list of job profiles.",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Delivers a list of job profiles.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Profile"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profiles/{curie}": {
+      "get": {
+        "tags": [
+          "Profiles"
+        ],
+        "summary": "Delivers a specific profile.",
+        "description": "Delivers a specific profile.",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "curie",
+            "in": "path",
+            "description": "Short URI of the specified Institution.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Specific job profile.",
+            "schema": {
+              "$ref": "#/definitions/Profile"
+            }
+          }
+        }
+      }
+    },
+    "/programs": {
+      "get": {
+        "tags": [
+          "Program"
+        ],
+        "summary": "Delivers a list of programs.",
+        "description": "Delivers a list of programs.",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Delivers a list of programs.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Program"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/programs/{curie}": {
+      "get": {
+        "tags": [
+          "Program"
+        ],
+        "summary": "Delivers one specific program.",
+        "description": "Delivers one specific program.",
+        "consumes": [],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "curie",
+            "in": "path",
+            "description": "Short URI of the specified Institution.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delivers one program.",
+            "schema": {
+              "$ref": "#/definitions/Program"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Rating": {
+      "required": [
+        "label",
+        "value"
+      ],
+      "properties": {
+        "label": {
+          "type": "array",
+          "description": "Label of the specified rating.",
+          "items": {
+            "$ref": "#/definitions/Label"
+          }
+        },
+        "value": {
+          "type": "number",
+          "format": "float",
+          "description": "Rating value."
+        }
+      },
+      "description": "Specific rating for the institution."
+    },
+    "Pillar": {
+      "required": [
+        "label"
+      ],
+      "properties": {
+        "label": {
+          "type": "array",
+          "description": "Label of pillar.",
+          "items": {
+            "$ref": "#/definitions/Label"
+          }
+        }
+      },
+      "description": "Represents a specific pillar."
+    },
+    "Profile": {
+      "required": [
+        "label",
+        "marketShare",
+        "requiredPillar"
+      ],
+      "properties": {
+        "label": {
+          "type": "array",
+          "description": "Label of job profile.",
+          "items": {
+            "$ref": "#/definitions/Label"
+          }
+        },
+        "marketShare": {
+          "type": "number",
+          "format": "float",
+          "description": "Market share of specific job profile."
+        },
+        "requiredPillar": {
+          "type": "array",
+          "description": "Required pillars.",
+          "items": {
+            "$ref": "#/definitions/Pillar"
+          }
+        }
+      },
+      "description": "Represents a specific job profile."
+    },
+    "Location": {
+      "required": [
+        "label",
+        "latitude",
+        "longitude"
+      ],
+      "properties": {
+        "label": {
+          "type": "array",
+          "description": "Label of location.",
+          "items": {
+            "$ref": "#/definitions/Label"
+          }
+        },
+        "latitude": {
+          "type": "number",
+          "format": "float",
+          "description": "Location latitude."
+        },
+        "longitude": {
+          "type": "number",
+          "format": "float",
+          "description": "Location longitude."
+        }
+      },
+      "description": "Defines a geo location."
+    },
+    "Namespace": {
+      "required": [
+        "namespace",
+        "uri"
+      ],
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "description": "Name of the namespace."
+        },
+        "uri": {
+          "type": "string",
+          "description": "URI of the namespace."
+        }
+      },
+      "description": "Describes a namespace."
+    },
+    "Label": {
+      "required": [
+        "label",
+        "languageCode"
+      ],
+      "properties": {
+        "languageCode": {
+          "type": "string",
+          "description": "ISO 639-1 Language Code."
+        },
+        "label": {
+          "type": "string",
+          "description": "Label of object."
+        }
+      },
+      "description": "Label of object with language information."
+    },
+    "Program": {
+      "required": [
+        "label",
+        "studyPeriods"
+      ],
+      "properties": {
+        "label": {
+          "type": "array",
+          "description": "Label of specific program.",
+          "items": {
+            "$ref": "#/definitions/Label"
+          }
+        },
+        "rating": {
+          "type": "array",
+          "description": "Rating of specific program.",
+          "items": {
+            "$ref": "#/definitions/Rating"
+          }
+        },
+        "studyPeriods": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Amount of study periods for specific program."
+        }
+      },
+      "description": "Program designates a specific degree program."
+    },
+    "Institution": {
+      "required": [
+        "altLabel",
+        "label",
+        "location",
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "Unique identifier representing a specific BISE college or university."
+        },
+        "label": {
+          "type": "array",
+          "description": "Labels of the specific institution.",
+          "items": {
+            "$ref": "#/definitions/Label"
+          }
+        },
+        "altLabel": {
+          "type": "array",
+          "description": "Alternative labels of the specific institution.",
+          "items": {
+            "$ref": "#/definitions/Label"
+          }
+        },
+        "location": {
+          "description": "Location of institution.",
+          "$ref": "#/definitions/Location"
+        }
+      },
+      "description": "Institution might be a college or university."
+    }
+  }
+}
