@@ -4,10 +4,15 @@
  * @version 1.0.0
  */
 
+error_log(E_ALL);
+
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
 require_once __DIR__ . '/vendor/autoload.php';
+require_once 'functions.php';
 
-$app = new Slim\App();
-
+$app = new \Slim\App();
 
 /**
  * GET programsGet
@@ -80,12 +85,10 @@ $app->GET('/profiles/{curie}', function($request, $response, $args) {
  * Output-Formats: [application/json]
  */
 $app->GET('/institutions', function($request, $response, $args) {
-            
-            
-            
-            
-            $response->write('How about implementing getInstitutions as a GET method ?');
-            return $response;
+            $institutions = getInstitutions();
+            $json = json_encode($institutions, JSON_OBJECT_AS_ARRAY);
+            $response->write($json);
+            return $response->withHeader('Content-type', 'application/json');
             });
 
 
@@ -96,12 +99,11 @@ $app->GET('/institutions', function($request, $response, $args) {
  * Output-Formats: [application/json]
  */
 $app->GET('/institutions/{curie}', function($request, $response, $args) {
-            
-            
-            
-            
-            $response->write('How about implementing getInstitutionsCurie as a GET method ?');
-            return $response;
+            $curie = $request->getAttribute('curie');
+            $institution = getInstitution($curie);
+            $json = json_encode($institution);
+            $response->write($json);
+            return $response->withHeader('Content-type', 'application/json');
             });
 
 
